@@ -1,0 +1,58 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - rabbitmq
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=pratik
+      - DB_PASSWORD=9g92gq00v
+      - DB_NAME=meal_generator
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - ACCESS_TOKEN_EXPIRES_IN=30
+      - REFRESH_TOKEN_EXPIRES_IN=30
+      - ALGORITHM=HS256
+      - SECRET_KEY=dkmnpocz3q
+
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile.celery
+    depends_on:
+      - app
+      - db
+      - rabbitmq
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=pratik
+      - DB_PASSWORD=9g92gq00v
+      - DB_NAME=meal_generator
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - ACCESS_TOKEN_EXPIRES_IN=30
+      - REFRESH_TOKEN_EXPIRES_IN=30
+      - ALGORITHM=HS256
+      - SECRET_KEY=dkmnpocz3q
+
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=pratik
+      - POSTGRES_PASSWORD=9g92gq00v
+      - POSTGRES_DB=meal_generator
+    ports:
+      - "5432:5432"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
