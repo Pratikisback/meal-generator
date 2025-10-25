@@ -11,7 +11,7 @@ services:
     environment:
       - DB_HOST=db
       - DB_PORT=5432
-      - DB_USER=pratik
+      - DB_USER=postgres
       - DB_PASSWORD=9g92gq00v
       - DB_NAME=meal_generator
       - RABBITMQ_HOST=rabbitmq
@@ -32,7 +32,7 @@ services:
     environment:
       - DB_HOST=db
       - DB_PORT=5432
-      - DB_USER=pratik
+      - DB_USER=postgres
       - DB_PASSWORD=9g92gq00v
       - DB_NAME=meal_generator
       - RABBITMQ_HOST=rabbitmq
@@ -45,7 +45,7 @@ services:
   db:
     image: postgres:15
     environment:
-      - POSTGRES_USER=pratik
+      # - POSTGRES_USER=pratik
       - POSTGRES_PASSWORD=9g92gq00v
       - POSTGRES_DB=meal_generator
     ports:
@@ -56,3 +56,4 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    restart: always

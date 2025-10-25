@@ -11,7 +11,18 @@ import pika
 app = FastAPI()
 app.include_router(router)
 app.include_router(user_route)
+from celery import Celery
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
+DATABASE_URL = os.getenv("DATABASE_URL")
+RABBITMQ_URL = os.getenv("RABBITMQ_URL")
+celery = Celery(
+    'tasks',
+    broker=RABBITMQ_URL,
+    backend=DATABASE_URL
+)
 
 
 origins = [
