@@ -2,10 +2,10 @@ from fastapi import FastAPI
 from route.routes import router
 from core.database import get_db, engine
 from core.connect_rabbitmq import connect_rabbitmq
-from features.user.model import Base
+from features.auth.model import Base
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from features.user.route import router as user_route
+from features.auth.route import router as user_route
 from route.routes import router
 import pika
 app = FastAPI()
